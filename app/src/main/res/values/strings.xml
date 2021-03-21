@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">NextGitter2</string>
+    <string name="app_name">NextGitter</string>
+    <string name="logo">Logo</string>
 </resources>
