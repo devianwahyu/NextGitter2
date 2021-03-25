@@ -1,13 +1,14 @@
 package com.example.nextgitter2.ui.main
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.nextgitter2.data.model.User
 import com.example.nextgitter2.databinding.ActivityMainBinding
+import com.example.nextgitter2.ui.detail.DetailUserActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -27,7 +28,7 @@ class MainActivity : AppCompatActivity() {
 
         adapter.setOnItemClickCallback(object: UserAdapter.OnItemClickCallback {
             override fun onItemClicked(data: User) {
-                Toast.makeText(this@MainActivity, data.username, Toast.LENGTH_SHORT).show()
+                startActivity(Intent(this@MainActivity, DetailUserActivity::class.java).putExtra(DetailUserActivity.EXTRA_USERNAME, data.username))
             }
         })
 

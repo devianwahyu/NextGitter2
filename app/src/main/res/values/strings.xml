@@ -3,4 +3,16 @@
     <string name="logo">Logo</string>
     <string name="search">Search</string>
     <string name="button_search">button search</string>
+    <string name="action_bar">action bar</string>
+    <string name="back">back</string>
+    <string name="default_name">404</string>
+    <string name="default_repository">0 Repository</string>
+    <string name="default_followers">0 Followers</string>
+    <string name="default_following">0 Following</string>
+    <string name="icon_repository">icon repository</string>
+    <string name="icon_location">icon location</string>
+    <string name="icon_company">icon company</string>
+    <string name="icon_follow">icon follow</string>
+    <string name="tab1">Followers</string>
+    <string name="tab2">Following</string>
 </resources>
