@@ -1,16 +1,19 @@
 package com.example.nextgitter2.ui.detail
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
+import com.example.nextgitter2.R
 import com.example.nextgitter2.databinding.ActivityDetailBinding
+import com.example.nextgitter2.ui.main.MainActivity
 
-class DetailUserActivity : AppCompatActivity() {
+class DetailUserActivity : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var binding: ActivityDetailBinding
     private lateinit var viewModel: DetailUserViewModel
-    val bundle = Bundle()
 
     companion object{
         const val EXTRA_USERNAME = "extra_username"
@@ -23,6 +26,9 @@ class DetailUserActivity : AppCompatActivity() {
         supportActionBar?.hide()
 
         val username = intent.getStringExtra(EXTRA_USERNAME)
+        val bundle = Bundle()
+        bundle.putString(EXTRA_USERNAME, username)
+
         viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(DetailUserViewModel::class.java)
         username?.let { viewModel.setUserDetail(it) }
         viewModel.getUserDetail().observe(this, {
@@ -43,7 +49,8 @@ class DetailUserActivity : AppCompatActivity() {
             }
         })
 
-        binding.back.setOnClickListener { moveBack() }
+        binding.back.setOnClickListener(this)
+        binding.logo.setOnClickListener(this)
 
         val sectionPagerAdapter = SectionPagerAdapter(this, supportFragmentManager, bundle)
         binding.apply {
@@ -52,7 +59,13 @@ class DetailUserActivity : AppCompatActivity() {
         }
     }
 
-    private fun moveBack() {
-        onBackPressedDispatcher.onBackPressed()
+    override fun onClick(v: View?) {
+        when (v?.id) {
+            R.id.back -> onBackPressedDispatcher.onBackPressed()
+            R.id.logo -> {
+                startActivity(Intent(this, MainActivity::class.java))
+                finish()
+            }
+        }
     }
 }
