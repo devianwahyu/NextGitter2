@@ -7,8 +7,13 @@ import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.nextgitter2.R
+import com.example.nextgitter2.data.local.FavoriteUser
 import com.example.nextgitter2.databinding.ActivityDetailBinding
 import com.example.nextgitter2.ui.main.MainActivity
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class DetailUserActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -17,6 +22,7 @@ class DetailUserActivity : AppCompatActivity(), View.OnClickListener {
 
     companion object{
         const val EXTRA_USERNAME = "extra_username"
+        const val EXTRA_ID = "extra_id"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,10 +32,11 @@ class DetailUserActivity : AppCompatActivity(), View.OnClickListener {
         supportActionBar?.hide()
 
         val username = intent.getStringExtra(EXTRA_USERNAME)
+        val id = intent.getIntExtra(EXTRA_ID, 0)
         val bundle = Bundle()
         bundle.putString(EXTRA_USERNAME, username)
 
-        viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(DetailUserViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(DetailUserViewModel::class.java)
         username?.let { viewModel.setUserDetail(it) }
         viewModel.getUserDetail().observe(this, {
             if (it != null) {
@@ -44,10 +51,34 @@ class DetailUserActivity : AppCompatActivity(), View.OnClickListener {
                     repository.text = it.repository.let { repo -> if (repo > 1) "$repo Repositories" else "$repo Repository" }
                     follower.text = it.followers.let { follower -> if (follower > 1) "$follower Followers" else "$follower Follower" }
                     following.text = it.following.let { following -> "$following Following" }
-
                 }
             }
         })
+
+        var _isChecked = false
+        CoroutineScope(Dispatchers.IO).launch {
+            val count = viewModel.checkFavoriteUser(id)
+            withContext(Dispatchers.Main) {
+                if (count > 0) {
+                    binding.toggle.isChecked = true
+                    _isChecked = true
+                } else {
+                    binding.toggle.isChecked = false
+                    _isChecked = false
+                }
+            }
+        }
+
+        binding.toggle.setOnClickListener {
+            _isChecked = !_isChecked
+            if (_isChecked) {
+                val favoriteUser = username?.let { it1 -> FavoriteUser(id, it1) }
+                favoriteUser?.let { it1 -> viewModel.addFavoriteUser(it1) }
+            } else {
+                viewModel.deleteFavoriteUser(id)
+            }
+            binding.toggle.isChecked = _isChecked
+        }
 
         binding.back.setOnClickListener(this)
         binding.logo.setOnClickListener(this)

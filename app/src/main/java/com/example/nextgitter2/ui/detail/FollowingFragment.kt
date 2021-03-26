@@ -2,9 +2,7 @@ package com.example.nextgitter2.ui.detail
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -46,7 +44,10 @@ class FollowingFragment: Fragment(R.layout.fragment_follow) {
                 adapter.setList(it)
                 adapter.setOnItemClickCallback(object: UserAdapter.OnItemClickCallback {
                     override fun onItemClicked(data: User) {
-                        startActivity(Intent(activity, DetailUserActivity::class.java).putExtra(DetailUserActivity.EXTRA_USERNAME, data.username))
+                        val intent = Intent(activity, DetailUserActivity::class.java)
+                        intent.putExtra(DetailUserActivity.EXTRA_USERNAME, data.username)
+                        intent.putExtra(DetailUserActivity.EXTRA_ID, data.id)
+                        startActivity(intent)
                     }
                 })
                 showLoading(false)
