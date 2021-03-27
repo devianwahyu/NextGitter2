@@ -23,6 +23,7 @@ class DetailUserActivity : AppCompatActivity(), View.OnClickListener {
     companion object{
         const val EXTRA_USERNAME = "extra_username"
         const val EXTRA_ID = "extra_id"
+        const val EXTRA_FAVORITE = "favorite_user"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,13 +32,12 @@ class DetailUserActivity : AppCompatActivity(), View.OnClickListener {
         setContentView(binding.root)
         supportActionBar?.hide()
 
-        val username = intent.getStringExtra(EXTRA_USERNAME)
-        val id = intent.getIntExtra(EXTRA_ID, 0)
+        val favorite = intent.getParcelableExtra<FavoriteUser>(EXTRA_FAVORITE) as FavoriteUser
         val bundle = Bundle()
-        bundle.putString(EXTRA_USERNAME, username)
+        bundle.putString(EXTRA_USERNAME, favorite.username)
 
         viewModel = ViewModelProvider(this).get(DetailUserViewModel::class.java)
-        username?.let { viewModel.setUserDetail(it) }
+        favorite.username.let { viewModel.setUserDetail(it) }
         viewModel.getUserDetail().observe(this, {
             if (it != null) {
                 binding.apply {
@@ -57,7 +57,7 @@ class DetailUserActivity : AppCompatActivity(), View.OnClickListener {
 
         var _isChecked = false
         CoroutineScope(Dispatchers.IO).launch {
-            val count = viewModel.checkFavoriteUser(id)
+            val count = viewModel.checkFavoriteUser(favorite.id)
             withContext(Dispatchers.Main) {
                 if (count > 0) {
                     binding.toggle.isChecked = true
@@ -72,10 +72,10 @@ class DetailUserActivity : AppCompatActivity(), View.OnClickListener {
         binding.toggle.setOnClickListener {
             _isChecked = !_isChecked
             if (_isChecked) {
-                val favoriteUser = username?.let { it1 -> FavoriteUser(id, it1) }
-                favoriteUser?.let { it1 -> viewModel.addFavoriteUser(it1) }
+                val favoriteUser = FavoriteUser(favorite.id, favorite.username, favorite.avatarUrl)
+                viewModel.addFavoriteUser(favoriteUser)
             } else {
-                viewModel.deleteFavoriteUser(id)
+                viewModel.deleteFavoriteUser(favorite.id)
             }
             binding.toggle.isChecked = _isChecked
         }

@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.nextgitter2.R
+import com.example.nextgitter2.data.local.FavoriteUser
 import com.example.nextgitter2.data.model.User
 import com.example.nextgitter2.databinding.FragmentFollowBinding
 import com.example.nextgitter2.ui.main.UserAdapter
@@ -44,10 +45,15 @@ class FollowingFragment: Fragment(R.layout.fragment_follow) {
                 adapter.setList(it)
                 adapter.setOnItemClickCallback(object: UserAdapter.OnItemClickCallback {
                     override fun onItemClicked(data: User) {
-                        val intent = Intent(activity, DetailUserActivity::class.java)
-                        intent.putExtra(DetailUserActivity.EXTRA_USERNAME, data.username)
-                        intent.putExtra(DetailUserActivity.EXTRA_ID, data.id)
-                        startActivity(intent)
+                        val favorite = FavoriteUser(
+                            data.id,
+                            data.username,
+                            data.avatarUrl
+                        )
+                        Intent(activity, DetailUserActivity::class.java).also {
+                            it.putExtra(DetailUserActivity.EXTRA_FAVORITE, favorite)
+                            startActivity(it)
+                        }
                     }
                 })
                 showLoading(false)

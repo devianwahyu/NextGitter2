@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.nextgitter2.data.local.FavoriteUser
 import com.example.nextgitter2.data.model.User
 import com.example.nextgitter2.databinding.ActivityMainBinding
 import com.example.nextgitter2.ui.detail.DetailUserActivity
@@ -28,10 +29,15 @@ class MainActivity : AppCompatActivity() {
 
         adapter.setOnItemClickCallback(object: UserAdapter.OnItemClickCallback {
             override fun onItemClicked(data: User) {
-                val intent = Intent(this@MainActivity, DetailUserActivity::class.java)
-                intent.putExtra(DetailUserActivity.EXTRA_USERNAME, data.username)
-                intent.putExtra(DetailUserActivity.EXTRA_ID, data.id)
-                startActivity(intent)
+                val favorite = FavoriteUser(
+                    data.id,
+                    data.username,
+                    data.avatarUrl
+                )
+                Intent(this@MainActivity, DetailUserActivity::class.java).also {
+                    it.putExtra(DetailUserActivity.EXTRA_FAVORITE, favorite)
+                    startActivity(it)
+                }
             }
         })
 
