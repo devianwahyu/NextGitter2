@@ -20,13 +20,11 @@ import retrofit2.Response
 class DetailUserViewModel(application: Application): AndroidViewModel(application) {
 
     val user = MutableLiveData<DetailUserResponse>()
-    private val getAllFavoriteUsers: LiveData<List<FavoriteUser>>
     private val repository: FavoriteUserRepository
 
     init {
         val favoriteUserDao = FavoriteUserDatabase.getDatabase(application).favoriteUserDao()
         repository = FavoriteUserRepository(favoriteUserDao)
-        getAllFavoriteUsers = repository.getAllFavoriteUsers
     }
 
     fun addFavoriteUser(favoriteUser: FavoriteUser) {

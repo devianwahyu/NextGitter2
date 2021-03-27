@@ -21,8 +21,6 @@ class DetailUserActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var viewModel: DetailUserViewModel
 
     companion object{
-        const val EXTRA_USERNAME = "extra_username"
-        const val EXTRA_ID = "extra_id"
         const val EXTRA_FAVORITE = "favorite_user"
     }
 
@@ -34,7 +32,7 @@ class DetailUserActivity : AppCompatActivity(), View.OnClickListener {
 
         val favorite = intent.getParcelableExtra<FavoriteUser>(EXTRA_FAVORITE) as FavoriteUser
         val bundle = Bundle()
-        bundle.putString(EXTRA_USERNAME, favorite.username)
+        bundle.putString(EXTRA_FAVORITE, favorite.username)
 
         viewModel = ViewModelProvider(this).get(DetailUserViewModel::class.java)
         favorite.username.let { viewModel.setUserDetail(it) }
@@ -55,29 +53,29 @@ class DetailUserActivity : AppCompatActivity(), View.OnClickListener {
             }
         })
 
-        var _isChecked = false
+        var isChecked = false
         CoroutineScope(Dispatchers.IO).launch {
             val count = viewModel.checkFavoriteUser(favorite.id)
             withContext(Dispatchers.Main) {
                 if (count > 0) {
                     binding.toggle.isChecked = true
-                    _isChecked = true
+                    isChecked = true
                 } else {
                     binding.toggle.isChecked = false
-                    _isChecked = false
+                    isChecked = false
                 }
             }
         }
 
         binding.toggle.setOnClickListener {
-            _isChecked = !_isChecked
-            if (_isChecked) {
+            isChecked = !isChecked
+            if (isChecked) {
                 val favoriteUser = FavoriteUser(favorite.id, favorite.username, favorite.avatarUrl)
                 viewModel.addFavoriteUser(favoriteUser)
             } else {
                 viewModel.deleteFavoriteUser(favorite.id)
             }
-            binding.toggle.isChecked = _isChecked
+            binding.toggle.isChecked = isChecked
         }
 
         binding.back.setOnClickListener(this)

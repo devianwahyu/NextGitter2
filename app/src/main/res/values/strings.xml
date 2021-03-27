@@ -16,4 +16,5 @@
     <string name="tab1">Followers</string>
     <string name="tab2">Following</string>
     <string name="icon_favorite">icon favorite</string>
+    <string name="favorites">Favorites</string>
 </resources>

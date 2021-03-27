@@ -10,6 +10,7 @@ import com.example.nextgitter2.data.local.FavoriteUser
 import com.example.nextgitter2.data.model.User
 import com.example.nextgitter2.databinding.ActivityMainBinding
 import com.example.nextgitter2.ui.detail.DetailUserActivity
+import com.example.nextgitter2.ui.favorite.FavoriteActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -49,6 +50,10 @@ class MainActivity : AppCompatActivity() {
             btnSearch.setOnClickListener {
                 searchUser()
             }
+
+            btnFloat.setOnClickListener {
+                moveToFavorite()
+            }
         }
 
         viewModel.getSearchUser().observe(this, {
@@ -57,6 +62,10 @@ class MainActivity : AppCompatActivity() {
                 showLoading(false)
             }
         })
+    }
+
+    private fun moveToFavorite() {
+        startActivity(Intent(this, FavoriteActivity::class.java))
     }
 
     private fun searchUser() {
