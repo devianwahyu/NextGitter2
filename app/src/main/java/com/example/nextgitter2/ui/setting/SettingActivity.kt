@@ -17,6 +17,7 @@ import com.example.nextgitter2.receiver.NotifierReceiver
         super.onCreate(savedInstanceState)
         binding = ActivitySettingBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        supportActionBar?.hide()
 
         val notifierPreference = NotifierPreference(this)
         binding.switching.isChecked = notifierPreference.getNotifier().isNotified
@@ -30,6 +31,10 @@ import com.example.nextgitter2.receiver.NotifierReceiver
                 saveNotifierState(false)
                 notifierReceiver.cancelNotifier(this)
             }
+        }
+
+        binding.back.setOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
         }
     }
 

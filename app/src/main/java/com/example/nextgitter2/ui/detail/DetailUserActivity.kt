@@ -79,7 +79,6 @@ class DetailUserActivity : AppCompatActivity(), View.OnClickListener {
         }
 
         binding.back.setOnClickListener(this)
-        binding.logo.setOnClickListener(this)
 
         val sectionPagerAdapter = SectionPagerAdapter(this, supportFragmentManager, bundle)
         binding.apply {
@@ -93,10 +92,6 @@ class DetailUserActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.back -> onBackPressedDispatcher.onBackPressed()
-            R.id.logo -> {
-                startActivity(Intent(this, MainActivity::class.java))
-                finish()
-            }
         }
     }
 }

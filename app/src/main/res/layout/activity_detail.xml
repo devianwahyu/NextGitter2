@@ -27,16 +27,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/logo"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:contentDescription="@string/logo"
-        android:src="@drawable/github_logo"
-        app:layout_constraintBottom_toBottomOf="@+id/bar"
-        app:layout_constraintEnd_toEndOf="@+id/bar"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/bar" />
+    <TextView
+        android:id="@+id/title"
+        style="@style/title_page"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/details"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/back"
+        app:layout_constraintStart_toEndOf="@+id/back"
+        app:layout_constraintTop_toTopOf="@+id/back" />
 
     <ToggleButton
         android:id="@+id/toggle"
@@ -63,6 +63,7 @@
 
     <TextView
         android:id="@+id/name"
+        style="@style/content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
@@ -74,6 +75,7 @@
 
     <TextView
         android:id="@+id/tusername"
+        style="@style/content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
@@ -98,6 +100,7 @@
 
     <TextView
         android:id="@+id/location"
+        style="@style/content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -132,6 +135,7 @@
 
     <TextView
         android:id="@+id/repository"
+        style="@style/content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -142,6 +146,7 @@
 
     <TextView
         android:id="@+id/company"
+        style="@style/content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -152,6 +157,7 @@
 
     <TextView
         android:id="@+id/follower"
+        style="@style/content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -173,6 +179,7 @@
 
     <TextView
         android:id="@+id/following"
+        style="@style/content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
