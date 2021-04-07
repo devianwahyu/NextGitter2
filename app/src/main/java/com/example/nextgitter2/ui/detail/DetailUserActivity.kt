@@ -86,6 +86,8 @@ class DetailUserActivity : AppCompatActivity(), View.OnClickListener {
             viewPager.adapter = sectionPagerAdapter
             tabs.setupWithViewPager(viewPager)
         }
+
+
     }
 
     override fun onClick(v: View?) {

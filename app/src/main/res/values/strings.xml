@@ -17,4 +17,9 @@
     <string name="tab2">Following</string>
     <string name="icon_favorite">icon favorite</string>
     <string name="favorites">Favorites</string>
+    <string name="settings">Settings</string>
+    <string name="floating_btn">button for check favorite user list</string>
+    <string name="set_notifier">Set notifier</string>
+    <string name="on">ON</string>
+    <string name="off">OFF</string>
 </resources>
